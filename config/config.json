@@ -1,0 +1,62 @@
+{
+	"app": {
+		"db": {
+			"dialect": "postgres",
+			"datasource": "dbname=pois user=postgres password=password sslmode=disable",
+			"dir": "migrations",
+			"table": "migrations"
+		},
+		"log": {
+			"accessLog": true,
+			"ccmsLog": true,
+			"aliasLog": true,
+			"esamLog": true,
+			"config": {
+				"dirName": "log/",
+				"logToStdout": false,
+				"logJSON": false,
+				"level": "info",
+				"maxSize": 1,
+				"maxBackups": 2,
+				"maxAge": 3        
+			}
+		}
+    },
+	"api": {
+		"enable": true,
+        "port": 8130,
+        "tlsPort": 8131,
+        "tlsCertPath": "./config/localhost.crt",
+        "tlsPrivateKeyPath": "./config/localhost.key",
+        "services": ["ccms", "alias"],
+        "rootpath": "/pois/",
+        "channelpath": "channels",
+        "aliaspath": "channels/alias",
+        "prometheusRootPath": "/metrics",
+		"missport":2244,
+        "swaggerRootPath": "/docs",
+        "responseTimeout": 10    
+	},
+    "esam": {
+		"enable": true,
+        "port": 8150,
+        "tlsport": 8151,
+        "rootpath": "/esam/v1/*/request",
+        "providers": ["millicom", "discovery", "comcast"],
+        "responseTimeout": 10,
+		"esamresponse": {
+			"acquisitionPointIdentity": "delete",
+			"utcPoint": "delete",
+			"SignalType": "delete",
+			"streamTimeType": "delete",
+			"scete35Payload": "delete",
+			"scte35DecodeError": "delete",
+			"spliceCommandType": "delete",
+			"spliceEventId": "delete",
+			"spliceDuration": "delete",
+			"noScheduleForTheDay": "delete",
+			"noScheduleForTheTime": "noop",
+			"validRecord": "replace"    
+		}
+	}
+}

@@ -1,0 +1,366 @@
+basePath: /pois/v1/channels
+consumes:
+    - application/json
+    - application/xml
+definitions:
+    AliasCreated:
+        properties:
+            message:
+                example: Alias names mapped for the channel {{channel name}}
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: AliasCreatedResonse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    BadRequestResponse:
+        properties:
+            message:
+                example: Please verify the request and try again
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: BadRequestErrorResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    ChannelNotFoundResponse:
+        properties:
+            message:
+                example: No Schedule found for the channel in a given date {{DDMMYYYY}}
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: ScheduleNotFoundResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    DeleteSchdeuleResponse:
+        properties:
+            message:
+                example: Schedule removed for the channel in given date {{DDMMYYYY}}
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: DeleteScheduleResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    GetAliasResponse:
+        properties:
+            aliasNames:
+                example:
+                    - cnnlive1
+                    - cnnlive2
+                items:
+                    type: string
+                type: array
+                x-go-name: AliasNames
+        type: object
+        x-go-name: AliasGetResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    NotFoundResponse:
+        properties:
+            message:
+                example: No alias found for the channel {{channel name}}
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: AliastNotFoundResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    Schedule:
+        properties:
+            ActualAiredLength:
+                example: "00000000"
+                type: string
+            ActualAiredPosition:
+                example: "000"
+                type: string
+            ActualAiredTime:
+                example: "000000"
+                type: string
+            BreakWithinWindow:
+                example: "002"
+                type: string
+            EventType:
+                example: LOI
+                type: string
+            PositionWithInBreak:
+                example: "001"
+                type: string
+            ScheduledDate:
+                example: "0110"
+                type: string
+            ScheduledLength:
+                example: "000030"
+                type: string
+            ScheduledTime:
+                example: "003000"
+                type: string
+            SpotIdentification:
+                example: "00000021902"
+                type: string
+            Statuscode:
+                example: "0000"
+                type: string
+            UserDefined:
+                example: AIR
+                type: string
+            WindowDurationTime:
+                example: "0057"
+                type: string
+            WindowStartTime:
+                example: "0003"
+                type: string
+        type: object
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    ScheduleCreated:
+        properties:
+            message:
+                example: Schedule created for the channels in a provided date {{DDMMYYYY}}
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: ScheduleCreatedResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    Schedules:
+        properties:
+            Schedule:
+                items:
+                    $ref: '#/definitions/Schedule'
+                type: array
+                x-go-name: ScheduleSlices
+        type: object
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    TimeDurationMap:
+        properties:
+            "001500":
+                $ref: '#/definitions/Schedules'
+        type: object
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    deleteSuccessResponse:
+        properties:
+            message:
+                example: Alias name deleted for the channel {{channel name}}
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: DeleteAliasResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    preprocessingFails:
+        properties:
+            message:
+                example: Unable to preprocess the file
+                type: string
+                x-go-name: Message
+        type: object
+        x-go-name: PreprocessingFailureResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+    scheduleRetrivalSuccessResponse:
+        properties:
+            "001500":
+                $ref: '#/definitions/Schedules'
+        type: object
+        x-go-name: ScheduleRetrivalResponse
+        x-go-package: _/C_/Users/Karthick_Jayaprakash/Documents/GIT/pois_database/pois/pois/swagger
+info:
+    description: '# The POIS API documentation is organized around REST and SOAP interfaces. REST API accepts binary and JSON request bodies and returns JSON and text responses. Our application used standard HTTP response codes and verbs'
+    license:
+        name: Vecima Networks Inc.
+    title: POIS API Documentation
+    version: 0.0.1
+paths:
+    /{channelname}/{date}:
+        delete:
+            description: This API deletes the channel schedule information for the provided date from the local database. It accepts the channel name and date from the path parameters to delete the specified channel schedule information
+            operationId: RemoveScheduleForTheChannel
+            parameters:
+                - description: Channel name to delete schedule information (channel name accepts alphanumeric and special characters (.-|!@#$%&_><+=))
+                  in: path
+                  name: channelname
+                  required: true
+                  type: string
+                - description: Delete schedule information for the date(DDMMYYYY)
+                  in: path
+                  name: date
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: (Schedule deleted for the  given channel and  provided date {{DDMMYYYY}})
+                    schema:
+                        $ref: '#/definitions/DeleteSchdeuleResponse'
+                "400":
+                    description: (Channel or date  not provided)
+                    schema:
+                        $ref: '#/definitions/BadRequestResponse'
+                "404":
+                    description: (No Schedule found for the channel for the   date {{DDMMYYYY}})
+                    schema:
+                        $ref: '#/definitions/ChannelNotFoundResponse'
+            summary: Delete Channel Schedule Information
+            tags:
+                - CCMSAPI
+        get:
+            description: This API retrieves the channel schedule information for the provided date from the database. It accepts the channel name and date from the path parameters to retrieve the channel scheduler information
+            operationId: GetChannelSchedule
+            parameters:
+                - description: Channel name to retrieve schedule information (channel accepts alphanumeric and  special characters (.-|!@#$%&_><+=))
+                  in: path
+                  name: channelname
+                  required: true
+                  type: string
+                - description: Retrieve schedule information for the date(DDMMYYYY)
+                  in: path
+                  name: date
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: (Schedule found for the channel for the given date {{DDMMYYYY}})
+                    schema:
+                        $ref: '#/definitions/scheduleRetrivalSuccessResponse'
+                "400":
+                    description: (Channel name or date not provided )
+                    schema:
+                        $ref: '#/definitions/BadRequestResponse'
+                "404":
+                    description: (No schedule found for the channel for the date {{DDMMYYYY}})
+                    schema:
+                        $ref: '#/definitions/ChannelNotFoundResponse'
+            summary: Retrieve Channel Schedule Information
+            tags:
+                - CCMSAPI
+        put:
+            consumes:
+                - application/json
+            description: This API is responsible for adding or updating the channel schedule information. It accepts the channel name and date from the path parameters and updates the payload schedule data  into local database. This API's payload must be a binary file with Content-Type  as application/octet-stream
+            operationId: CCMSAPI
+            parameters:
+                - description: Channel name to add schedule information (channel name  accept  alphanumeric and  special characters (.-|!@#$%&_><+=))
+                  in: path
+                  name: channelname
+                  required: true
+                  type: string
+                - description: Add schedule information for the date(DDMMYYYY)
+                  in: path
+                  name: date
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "201":
+                    description: (Schedule created for the channel {{channel name}})
+                    schema:
+                        $ref: '#/definitions/ScheduleCreated'
+                "400":
+                    description: (Channel name, date parsing error, or request body parsing error)
+                    schema:
+                        $ref: '#/definitions/BadRequestResponse'
+                "500":
+                    description: (unable to process the file )
+                    schema:
+                        $ref: '#/definitions/preprocessingFails'
+            summary: Add/Update Channel Schedule Information
+    /alias/{channelname}:
+        get:
+            description: This API retrieves the alias names for the given channel. It accepts the channel name  from the path parameters and responds with list of alias for the given channel name
+            operationId: retrieveAliasnames
+            parameters:
+                - description: Channel name to retrieve alias names
+                  in: path
+                  name: channelname
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: (Retrieves the list of aliases for the channel)
+                    schema:
+                        $ref: '#/definitions/GetAliasResponse'
+                "400":
+                    description: (Channel name not provided)
+                    schema:
+                        $ref: '#/definitions/BadRequestResponse'
+                "404":
+                    description: (No alias found for the given channel)
+                    schema:
+                        $ref: '#/definitions/NotFoundResponse'
+            summary: Retrieve alias names
+            tags:
+                - ALIASAPI
+        put:
+            consumes:
+                - application/json
+            description: This API adds or updates the alias names for the given  channel. It accepts the channel name  from the path params and a payload with a list of alias names. This API's payload must be JSON data  with Content-Type  as application/json
+            operationId: addAlias
+            parameters:
+                - description: alias names for the channels
+                  in: body
+                  name: Body
+                  schema:
+                    properties:
+                        aliasNames:
+                            example:
+                                - cnnlive1
+                                - cnnlive2
+                            items:
+                                type: string
+                            type: array
+                            x-go-name: AliasNames
+                    type: object
+                - description: Channel name to add/update alias names
+                  in: path
+                  name: channelname
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "201":
+                    description: (Alias are created/mapped for the corresponding channel)
+                    schema:
+                        $ref: '#/definitions/AliasCreated'
+                "400":
+                    description: (Channel name or request body error parsing error)
+                    schema:
+                        $ref: '#/definitions/BadRequestResponse'
+            summary: Create/Update alias names.
+            tags:
+                - ALIASAPI
+    /alias/{channelname}/{aliasname}:
+        delete:
+            description: This API deletes the alias name for the given channel. It accepts the channel name and alias name from the path parameters to delete the channel's alias name(s)
+            operationId: RemoveAlias
+            parameters:
+                - description: Channel name to delete alias names
+                  in: path
+                  name: channelname
+                  required: true
+                  type: string
+                - description: Alias name of the channel
+                  in: path
+                  name: aliasname
+                  required: true
+                  type: string
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: (Alias names are deleted for the given channel {{channel name}})
+                    schema:
+                        $ref: '#/definitions/deleteSuccessResponse'
+                "400":
+                    description: (Channel name or alias name  not provided)
+                    schema:
+                        $ref: '#/definitions/BadRequestResponse'
+                "404":
+                    description: (No alias found for the channel {{channel name}})
+                    schema:
+                        $ref: '#/definitions/NotFoundResponse'
+            summary: Delete alias names
+            tags:
+                - ALIASAPI
+produces:
+    - application/json
+    - application/xml
+swagger: "2.0"
